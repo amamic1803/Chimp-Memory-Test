@@ -1,7 +1,18 @@
 import time
 from tkinter import *
 from random import randint
+import sys
+import os
 
+
+def resource_path(relative_path):
+	""" Get absolute path to resource, works for dev and for PyInstaller """
+	try:
+		# PyInstaller creates a temp folder and stores path in _MEIPASS
+		base_path = sys._MEIPASS
+	except AttributeError:
+		base_path = os.path.abspath(".")
+	return os.path.join(base_path, relative_path)
 
 def preklop(x, y, koordinate):
 	for i in koordinate:
@@ -23,10 +34,14 @@ def klik(event, tipka):
 		start_time = time.time()
 	if curr_num == tipka:
 		kocke[tipka - 1].config(text=f"{tipka}", background="#00c90d", activebackground="#00c90d")
+		if curr_num == 10:
+			status_line.config(text=f"Success! ({round(time.time() - start_time, 3)} s)", foreground="#00c90d", activeforeground="#00c90d")
 		curr_num += 1
 	elif curr_num < tipka < 11:
 		for broj in range(curr_num - 1, 10):
-			kocke[broj].config(text=f"{broj + 1}", background="#f0000c", activebackground="#f0000c")
+			kocke[broj].config(text=f"{broj + 1}", background="#ffffff", activebackground="#ffffff")
+		kocke[tipka - 1].config(text=str(tipka), background="#f0000c", activebackground="#f0000c")
+		status_line.config(text=f"Fail! ({curr_num - 1}/{10})", foreground="#f0000c", activeforeground="#f0000c")
 		curr_num = 11
 
 def start_clk(event):
@@ -38,6 +53,7 @@ def start_clk(event):
 
 	run_num += 1
 	curr_num = 1
+	status_line.config(text="")
 	while len(kocke) != 0:
 		kocke[0].destroy()
 		kocke.pop(0)
@@ -79,6 +95,7 @@ if __name__ == '__main__':
 	root.geometry(f"500x600+{root.winfo_screenwidth() // 2 - 250}+{root.winfo_screenheight() // 2 - 300}")
 	root.resizable(False, False)
 	root.config(background="#000000")
+	root.iconbitmap(resource_path("chimp-memory-test-icon.ico"))
 
 	start_btn = Label(root, text="START", font=("Helvetica", 20, "bold"), borderwidth=0, highlightthickness=0, highlightcolor="red", highlightbackground="red", background="#03fce3", activebackground="#03fce3")
 	start_btn.place(x=0, y=0, height=80, width=120)
@@ -89,9 +106,12 @@ if __name__ == '__main__':
 	reg = root.register(validate_input)
 	ent = Entry(root, justify=CENTER, validate="key", validatecommand=(reg, "%P"), background="white", foreground="#000000", highlightthickness=3, highlightcolor="blue", highlightbackground="blue", borderwidth=0, font=("Helvetica", 11))
 	ent.insert(0, "5")
-	ent.place(x=270, y=20, width=55, height=25)
+	ent.place(x=345, y=7, width=55, height=25)
 	ent_lbl = Label(root, text="Time visible (s):", font=("Helvetica", 12, "bold"), borderwidth=0, highlightthickness=0, background="#000000", activebackground="#000000", foreground="#ffffff", activeforeground="#ffffff")
-	ent_lbl.place(x=150, y=20, width=120, height=25)
+	ent_lbl.place(x=220, y=7, width=125, height=25)
+
+	status_line = Label(root, text="", font=("Helvetica", 12, "bold"), justify=CENTER, borderwidth=0, highlightthickness=0, background="#000000", activebackground="#000000", foreground="#ffffff", activeforeground="#ffffff")
+	status_line.place(x=120, y=40, width=380, height=40)
 
 	run_num = 0
 	kocke = []
