@@ -88,14 +88,22 @@ def validate_input(full_text):
 		except ValueError:
 			return False
 
+def main():
+	global run_num, kocke, start_time
+	global root
+	global ent
+	global status_line
 
-if __name__ == '__main__':
+	run_num = 0
+	kocke = []
+	start_time = 0
+
 	root = Tk()
 	root.title("Chimp Memory Test")
 	root.geometry(f"500x600+{root.winfo_screenwidth() // 2 - 250}+{root.winfo_screenheight() // 2 - 300}")
 	root.resizable(False, False)
 	root.config(background="#000000")
-	root.iconbitmap(resource_path("chimp-memory-test-icon.ico"))
+	root.iconbitmap(resource_path("data/chimp-icon.ico"))
 
 	start_btn = Label(root, text="START", font=("Helvetica", 20, "bold"), borderwidth=0, highlightthickness=0, highlightcolor="red", highlightbackground="red", background="#03fce3", activebackground="#03fce3")
 	start_btn.place(x=0, y=0, height=80, width=120)
@@ -113,7 +121,8 @@ if __name__ == '__main__':
 	status_line = Label(root, text="", font=("Helvetica", 12, "bold"), justify=CENTER, borderwidth=0, highlightthickness=0, background="#000000", activebackground="#000000", foreground="#ffffff", activeforeground="#ffffff")
 	status_line.place(x=120, y=40, width=380, height=40)
 
-	run_num = 0
-	kocke = []
-	start_time = 0
 	root.mainloop()
+
+
+if __name__ == '__main__':
+	main()
