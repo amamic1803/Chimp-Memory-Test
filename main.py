@@ -1,8 +1,8 @@
-import time
-from tkinter import *
-from random import randint
-import sys
 import os
+import sys
+import time
+import tkinter as tk
+from random import randint
 
 
 def resource_path(relative_path):
@@ -64,8 +64,8 @@ def start_clk(event):
 		y_koord = randint(100, 555)
 		if not preklop(x_koord, y_koord, koord_kocke):
 			koord_kocke.append([x_koord, y_koord])
-			kocke.append(Label(root, text=str(i), font=("Helvetica", 25, "bold"), justify=CENTER, borderwidth=0, highlightthickness=0, background="#ffffff", activebackground="#ffffff", foreground="#000000", activeforeground="#000000"))
-			kocke[-1].bind("<ButtonRelease-1>", lambda event=event, vrsta=i: klik(event, vrsta))
+			kocke.append(tk.Label(root, text=str(i), font=("Helvetica", 25, "bold"), justify=tk.CENTER, borderwidth=0, highlightthickness=0, background="#ffffff", activebackground="#ffffff", foreground="#000000", activeforeground="#000000"))
+			kocke[-1].bind("<ButtonRelease-1>", lambda event, vrsta=i: klik(event, vrsta))
 			kocke[-1].place(x=x_koord, y=y_koord, height=45, width=45)
 			i += 1
 	root.after(int(vrijeme * 1000), brisi, run_num)
@@ -98,27 +98,27 @@ def main():
 	kocke = []
 	start_time = 0
 
-	root = Tk()
+	root = tk.Tk()
 	root.title("Chimp Memory Test")
 	root.geometry(f"500x600+{root.winfo_screenwidth() // 2 - 250}+{root.winfo_screenheight() // 2 - 300}")
 	root.resizable(False, False)
 	root.config(background="#000000")
-	root.iconbitmap(resource_path("data/chimp-icon.ico"))
+	root.iconbitmap(resource_path("resources/chimp-icon.ico"))
 
-	start_btn = Label(root, text="START", font=("Helvetica", 20, "bold"), borderwidth=0, highlightthickness=0, highlightcolor="red", highlightbackground="red", background="#03fce3", activebackground="#03fce3")
+	start_btn = tk.Label(root, text="START", font=("Helvetica", 20, "bold"), borderwidth=0, highlightthickness=0, highlightcolor="red", highlightbackground="red", background="#03fce3", activebackground="#03fce3")
 	start_btn.place(x=0, y=0, height=80, width=120)
 	start_btn.bind("<Enter>", lambda event: change_thickness(event, start_btn, False, 0, 5))
 	start_btn.bind("<Leave>", lambda event: change_thickness(event, start_btn, True, 0, 5))
 	start_btn.bind("<ButtonRelease-1>", start_clk)
 
 	reg = root.register(validate_input)
-	ent = Entry(root, justify=CENTER, validate="key", validatecommand=(reg, "%P"), background="white", foreground="#000000", highlightthickness=3, highlightcolor="blue", highlightbackground="blue", borderwidth=0, font=("Helvetica", 11))
+	ent = tk.Entry(root, justify=tk.CENTER, validate="key", validatecommand=(reg, "%P"), background="white", foreground="#000000", highlightthickness=3, highlightcolor="blue", highlightbackground="blue", borderwidth=0, font=("Helvetica", 11))
 	ent.insert(0, "5")
 	ent.place(x=345, y=7, width=55, height=25)
-	ent_lbl = Label(root, text="Time visible (s):", font=("Helvetica", 12, "bold"), borderwidth=0, highlightthickness=0, background="#000000", activebackground="#000000", foreground="#ffffff", activeforeground="#ffffff")
+	ent_lbl = tk.Label(root, text="Time visible (s):", font=("Helvetica", 12, "bold"), borderwidth=0, highlightthickness=0, background="#000000", activebackground="#000000", foreground="#ffffff", activeforeground="#ffffff")
 	ent_lbl.place(x=220, y=7, width=125, height=25)
 
-	status_line = Label(root, text="", font=("Helvetica", 12, "bold"), justify=CENTER, borderwidth=0, highlightthickness=0, background="#000000", activebackground="#000000", foreground="#ffffff", activeforeground="#ffffff")
+	status_line = tk.Label(root, text="", font=("Helvetica", 12, "bold"), justify=tk.CENTER, borderwidth=0, highlightthickness=0, background="#000000", activebackground="#000000", foreground="#ffffff", activeforeground="#ffffff")
 	status_line.place(x=120, y=40, width=380, height=40)
 
 	root.mainloop()
