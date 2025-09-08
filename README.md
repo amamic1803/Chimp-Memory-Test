@@ -1,5 +1,5 @@
 # Chimp-Memory-Test
-A memory test similar to the one used for chimps.
+A memory test similar to the one used on chimpanzees.
 
 Video: 
 [The Cognitive Tradeoff Hypothesis](https://www.youtube.com/watch?v=ktkjUjcZid0)
